@@ -6,7 +6,7 @@ import os
 from discord.ext.voice_recv import VoiceRecvClient, AudioSink
 import wave
 import AI
-import key
+
 
 #bot setup
 class Client(commands.Bot):
@@ -42,7 +42,7 @@ async def enter_voice(interaction: discord.Interaction, say: str):
 
     await interaction.response.send_message("Generating, please wait...")
     AI.run(say) #generating the audio
-    source = discord.FFmpegPCMAudio('C:/Users/user/Desktop/code/Discord Bots/Voice_clone_bot/Audio_out/out.wav')
+    source = discord.FFmpegPCMAudio('.../out.wav')#please give it the same dir as the output in AI.py
 
     #connecting to vc or changing vc
     vc = interaction.guild.voice_client
@@ -71,7 +71,7 @@ async def enter_voice(interaction: discord.Interaction, say: str):
 
 
     #stting up the dropdown menu to select a wav file that has already been recorded
-    directory_path = "C:/Users/user/Desktop/code/Discord Bots/Voice_clone_bot/Audio_from_bot" 
+    directory_path = "..." #please put in dir for the recordings in a seprate file
 
     options = []
     file_names = []
@@ -97,12 +97,12 @@ async def enter_voice(interaction: discord.Interaction, say: str):
                 view=self.view
             )
             #take which file the user selected and send it to the tts with the prompt
-            AUDIO_PROMPT_PATH = f'C:/Users/user/Desktop/code/Discord Bots/Voice_clone_bot/Audio_from_bot/{self.values[0]}'
+            AUDIO_PROMPT_PATH = f'.../{self.values[0]}'#keep the self.values as is and add the recordings dir
             await interaction.followup.send("Generating, please wait...")
             AI.run_with_audio_in(say,AUDIO_PROMPT_PATH) 
             await interaction.followup.send("Now playing")
             #setup for audio playback 
-            source = discord.FFmpegPCMAudio('C:/Users/user/Desktop/code/Discord Bots/Voice_clone_bot/Audio_out/out.wav')
+            source = discord.FFmpegPCMAudio('.../out.wav')#keep out.wav as is and add the output from AI.py
 
             channel = interaction.user.voice.channel
 
@@ -143,7 +143,7 @@ async def leave(interaction: discord.Interaction):
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-RECORDINGS_DIR = "C:/Users/user/Desktop/code/Discord Bots/Voice_clone_bot/Audio_from_bot"
+RECORDINGS_DIR = "..."#dir for the recording
 os.makedirs(RECORDINGS_DIR, exist_ok=True)
 
 #records audio in raw format then converts to wav to be used in the tts model
@@ -226,7 +226,7 @@ async def stoprecord(interaction: discord.Interaction):
         vc.stop_listening()
         vc._wav_sink.cleanup()
         del vc._wav_sink
-        await interaction.response.send_message("Recording stopped. WAV files saved in")
+        await interaction.response.send_message("Recording stopped. WAV files saved")
         await vc.disconnect(force=True)
     else:
         await interaction.response.send_message("Not currently recording.")
@@ -235,4 +235,5 @@ async def stoprecord(interaction: discord.Interaction):
 
 
 
-client.run(key.discord_key())
+
+client.run("")#add bot key
