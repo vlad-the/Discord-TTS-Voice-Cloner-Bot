@@ -26,7 +26,7 @@ def run_with_audio_in(input,AUDIO_PROMPT_PATH):
     # If you want to synthesize with a different voice, specify the audio prompt
     #AUDIO_PROMPT_PATH = "C:/Users/user/Desktop/X_XaDi-liwLMIono2uDm0Q.wav"
     wav = model.generate(text, audio_prompt_path=AUDIO_PROMPT_PATH)
-    ta.save("C:/Users/user/Desktop/code/Discord Bots/Voice_clone_bot/Audio_out/out.wav", wav, model.sr)
+    ta.save(".../out.wav", wav, model.sr) #put in the dir where you want to save the audio file make sure it is seperate from the recording dir
 
 
 def run(input):
@@ -37,4 +37,5 @@ def run(input):
     print(text)
 
     wav = model.generate(text)
-    ta.save("C:/Users/user/Desktop/code/Discord Bots/Voice_clone_bot/Audio_out/out.wav", wav, model.sr)
+    ta.save(".../out.wav", wav, model.sr) #put in the dir where you want to save the audio file make sure it is seperate from the recording dir
+
